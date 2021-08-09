@@ -27,8 +27,10 @@ const menu = {
 
 function orderMessage(order) {
     let message = '';
-    order.forEach(el => (message += `${el.value}, `));
-    return `Ваш заказ ${message} готов!`;
+    const start = 0;
+    const end = -1;
+    order.forEach(el => (message += `${el.value},`));
+    return `Ваш заказ: ${message.slice(start, end)} готов!`;
 }
 
 function makeOrder(order) {
@@ -40,7 +42,7 @@ function makeOrder(order) {
             let emptyValue = totalOrder.findIndex(item => typeof item === 'undefined');
             if (!++emptyValue) {
                 const div = document.querySelector('.order');
-                div.innerHTML = orderMessage(totalOrder);
+                div.textContent = orderMessage(totalOrder);
             }
         }, el.time);
     });
