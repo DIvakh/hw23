@@ -25,15 +25,15 @@ const menu = {
     ],
 };
 
-function orderMessage(order) {
+function orderMessage(order, cb) {
     let message = '';
     const start = 0;
     const end = -1;
     order.forEach(el => (message += `${el.value},`));
-    return `Ваш заказ: ${message.slice(start, end)} готов!`;
+    cb(`Ваш заказ: ${message.slice(start, end)} готов!`);
 }
 
-function makeOrder(order) {
+function makeOrder(order, callBack) {
     const totalOrder = [];
     totalOrder.length = order.length;
     order.forEach((el, index) => {
@@ -41,11 +41,10 @@ function makeOrder(order) {
             totalOrder[index] = { value: el.name };
             let emptyValue = totalOrder.findIndex(item => typeof item === 'undefined');
             if (!++emptyValue) {
-                const div = document.querySelector('.order');
-                div.textContent = orderMessage(totalOrder);
+                callBack(totalOrder, alert);
             }
         }, el.time);
     });
 }
 
-makeOrder(menu.burger);
+makeOrder(menu.burger, orderMessage);
